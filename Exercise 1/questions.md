@@ -4,6 +4,7 @@ Exercise 1 - Theory questions
 ### Concepts
 
 What is the difference between *concurrency* and *parallelism*?
+
 > *Your answer here*
     Concurrency: Refers to the ability of different parts or tasks of a system to be executed out-of-order or in partial order without affecting the final outcome. 
     It's about dealing with multiple tasks being in progress simultaneously, but not necessarily executing at the exact same time.
@@ -25,12 +26,15 @@ What is the difference between a *race condition* and a *data race*?
     A scheduler is a component of an operating system responsible for determining the execution order of processes or threads. It decides which tasks are executed and when. 
     The scheduler uses scheduling algorithms to allocate resources and manage the execution of tasks efficiently.
 
+
 ### Engineering
 
 Why would we use multiple threads? What kinds of problems do threads solve?
+
 > *Your answer here*
     Threads are used to solve problems that can be decomposed into smaller, independent tasks that can be executed concurrently.
     Improved Responsiveness: In graphical user interfaces, threads can be used to keep the user interface responsive while performing background tasks
+
 
 Some languages support "fibers" (sometimes called "green threads") or "coroutines"? What are they, and why would we rather use them over threads?
 > *Your answer here*
@@ -41,7 +45,10 @@ Some languages support "fibers" (sometimes called "green threads") or "coroutine
     Threads poses the risk of data integrity since one thread may be stopped in the middle of updating data. Since multiple processors allows multiple threads, the programmer has to 
     be careful about concurrent data access
 
+Useful in environments with high levels of I/O-bound tasks or where minimizing the overhead of context switching is important.
+
 Does creating concurrent programs make the programmer's life easier? Harder? Maybe both?
+
 > *Your answer here*
     Easier for tasks that naturally lend themselves to parallel execution. 
     Harder due to the complexity of managing synchronization, avoiding race conditions, and ensuring correct behavior in a concurrent environment. 
@@ -51,5 +58,6 @@ What do you think is best - *shared variables* or *message passing*?
 > *Your answer here*
     Shared Variables: Involves threads communicating by sharing variables. It requires synchronization mechanisms to avoid race conditions
     Message Passing: Involves communication between threads by passing messages. It can simplify synchronization but may introduce overhead
+
 
 

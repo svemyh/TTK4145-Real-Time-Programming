@@ -17,14 +17,18 @@ struct BoundedBuffer {
     
 };
 
+// Remember:
+// Semaphore - e.g. Wait (P operation or acquire()) or Signal (V operation or release()):
+// Mutexes - a binary semaphore (having only two states: locked and unlocked)
+
 struct BoundedBuffer* buf_new(int size){
     struct BoundedBuffer* buf = malloc(sizeof(struct BoundedBuffer));
     buf->buf = rb_new(size);
     
     pthread_mutex_init(&buf->mtx, NULL);
     // TODO: initialize semaphores
-    //sem_init(&buf->capacity,      0, /*starting value?*/);
-	//sem_init(&buf->numElements,   0, /*starting value?*/);
+    sem_init(&buf->capacity, 0, size); // init to size 5 in main-loop
+	sem_init(&buf->numElements, 0, 0); // init at o elements
     
     return buf;    
 }
@@ -42,19 +46,29 @@ void buf_destroy(struct BoundedBuffer* buf){
 
 void buf_push(struct BoundedBuffer* buf, int val){    
     // TODO: wait for there to be room in the buffer
+    sem_wait(&buf->capacity);
+
     // TODO: make sure there is no concurrent access to the buffer internals
-    
+
+    //Implement mutex locking to ensure no concurrent access
+    pthread_mutex_lock(&buf->mtx);
     rb_push(buf->buf, val);
+    pthread_mutex_unlock(&buf->mtx);
     
-    
-    // TODO: signal that there are new elements in the buffer    
+    // TODO: signal that there are new elements in the buffer 
+    sem_post(&buf->numElements);
 }
 
 int buf_pop(struct BoundedBuffer* buf){
     // TODO: same, but different?
+    //Wait for there to ba an element to pop
+    sem_wait(&buf->numElements);
     
+    pthread_mutex_lock(&buf->mtx);
     int val = rb_pop(buf->buf);    
-    
+    pthread_mutex_unlock(&buf->mtx);
+
+    sem_post(&buf->capacity);
     return val;
 }
 
@@ -86,18 +100,17 @@ void* consumer(void* args){
 }
 
 int main(){ 
-    
     struct BoundedBuffer* buf = buf_new(5);
     
     pthread_t producer_thr;
-    pthread_t consumer_thr;
+    pthread_t consumer_thr; // init threads
     pthread_create(&producer_thr, NULL, producer, buf);
-    pthread_create(&consumer_thr, NULL, consumer, buf);
+    pthread_create(&consumer_thr, NULL, consumer, buf); // starting threads
     
-    pthread_join(producer_thr, NULL);
-    pthread_cancel(consumer_thr);
+    pthread_join(producer_thr, NULL); // Waits for the producer thread to complete.
+    pthread_cancel(consumer_thr); //  Since the consumer runs indefinitely, it's canceled using pthread_cancel.
     
-    buf_destroy(buf);
+    buf_destroy(buf); // clean up the bounded buffer resources.
     
     return 0;
 }
