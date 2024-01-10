@@ -46,6 +46,6 @@ Does creating concurrent programs make the programmer's life easier? Harder? May
 What do you think is best - *shared variables* or *message passing*?
 > *Your answer here*
     Shared Variables: Involves threads communicating by sharing variables. It requires synchronization mechanisms to avoid race conditions.
-    Message Passing: Involves communication between threads by passing messages. It can simplify synchronization but may introduce overhead.
+    Message Passing: Involves communication between threads by passing messages. It can simplify synchronization but may introduce overhead
 
 
