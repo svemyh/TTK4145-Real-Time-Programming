@@ -34,8 +34,12 @@ Why would we use multiple threads? What kinds of problems do threads solve?
 
 Some languages support "fibers" (sometimes called "green threads") or "coroutines"? What are they, and why would we rather use them over threads?
 > *Your answer here*
-    These are lightweight, cooperative concurrency units. 
-    They are managed by the application rather than the operating system, allowing for more control over execution. They are suitable for tasks with many blocking operations.
+    Both fibers and coroutines are mechanisms used for cooperative concurrent multitasking in a single thread.
+    Fibers/Green threads: Has a scheduler. 
+    Coroutines: Doesn't have a scheduler since it doesn't need it. When it yields, it passes controll to the caller
+    They are managed by the application rather than the operating system, allowing for more programmer control over execution. They are suitable for tasks with many blocking operations.
+    Threads poses the risk of data integrity since one thread may be stopped in the middle of updating data. Since multiple processors allows multiple threads, the programmer has to 
+    be careful about concurrent data access
 
 Does creating concurrent programs make the programmer's life easier? Harder? Maybe both?
 > *Your answer here*
@@ -45,7 +49,7 @@ Does creating concurrent programs make the programmer's life easier? Harder? May
 
 What do you think is best - *shared variables* or *message passing*?
 > *Your answer here*
-    Shared Variables: Involves threads communicating by sharing variables. It requires synchronization mechanisms to avoid race conditions.
+    Shared Variables: Involves threads communicating by sharing variables. It requires synchronization mechanisms to avoid race conditions
     Message Passing: Involves communication between threads by passing messages. It can simplify synchronization but may introduce overhead
 
 
