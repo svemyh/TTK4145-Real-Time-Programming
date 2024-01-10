@@ -57,7 +57,7 @@ void buf_push(struct BoundedBuffer* buf, int val){
 
 int buf_pop(struct BoundedBuffer* buf){
     // TODO: same, but different?
-    //Wait for there to ba an element to pop
+    //Wait for there to be an element to pop
     sem_wait(&buf->numElements);
     
     pthread_mutex_lock(&buf->mtx);
