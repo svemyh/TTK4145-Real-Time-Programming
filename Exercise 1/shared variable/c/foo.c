@@ -5,21 +5,26 @@
 #include <stdio.h>
 
 int i = 0;
+pthread_mutex_t mutex;   //Declare a mutex object
 
 // Note the return type: void*
 void* incrementingThreadFunction(){
     // TODO: increment i 1_000_000 times
+    pthread_mutex_lock(&mutex);
     for (int j = 0; j < 1000000; j++) {
         i++;
     }
+    pthread_mutex_unlock(&mutex);
     return NULL;
 }
 
 void* decrementingThreadFunction(){
     // TODO: decrement i 1_000_000 times
+    pthread_mutex_lock(&mutex);
     for (int j = 0; j < 1000000; j++) {
         i--;
     }
+    pthread_mutex_unlock(&mutex);
     return NULL;
 }
 
