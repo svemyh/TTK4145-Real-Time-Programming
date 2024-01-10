@@ -1,4 +1,4 @@
-Exercise 1 : Concurrency Essentials
+Eercise 1 : Concurrency Essentials
 ===================================
 
 1: If you are not on the lab
@@ -157,18 +157,30 @@ This part of the exercise is not for handing in, just for thinking about. Talk t
 
 The main problem of the project is to ensure that no orders are lost. 
  - What sub-problems do you think this consists of?
+ * Concurrent data update leading to preemptive yields or blocks. Race conditions 
+
  - What will you have to make in order to solve these problems?
+ * Taking fibers and coroutines vs threads into account. Synchronization. Overhead
 
 Maybe try thinking about the happy case of the system:
  - If we push the button one place, how do we make (preferably only) one elevator start moving?
+ *
+
  - Once an elevator arrives, how do we inform the others that it is safe to clear that order?
+ * Fiber mechanics. Handshakes
 
 Maybe try thinking about the worst-case (http://xkcd.com/748/) behavior of the system:
  - What if the software controlling one of the elevators suddenly crashes?
+ * Optimizing. Turning the elevator on and off idk
  - What if it doesn't crash, but hangs?
+ * Check loops. Try turning it on and off 
  - What if a message between machines is lost?
+ * Control log for troubleshooting
  - What if the network cable is suddenly disconnected? Then re-connected?
+ * Our own implementation of run checks before updates
  - What if the elevator car never arrives at its destination?
+ * Have an expiration time before the operation should abort
+
 
 8: Thinking about languages
 ---------------------------
@@ -177,6 +189,7 @@ In the next exercises (the first of which being networking) and the project, you
 
 Here are a few things you should consider:
  - Think about how want to move data around (reading buttons, network, setting motor & lights, state machines, etc). Do you think in a shared-variable way or a message-passing way? Will you be using concurrency at all?
+ * Message-passing. Concurrency would be probable. 
  - How will you split into modules? Functions, objects, threads? Think about what modules you need, and how they need to interact. This is an iterative design process that will take you many tries to get "right".
  - Does the language "look right"? Does the standard library feel comprehensive?
  - While working on new sections on the project you'll want to avoid introducing bugs to the parts that already work properly. Does the language have a framework for making and running tests, or can you easily create one? 
