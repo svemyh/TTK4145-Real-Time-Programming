@@ -56,7 +56,7 @@ int main(){
     // start the two functions as their own threads using `pthread_create`
     // Hint: search the web! Maybe try "pthread_create example"?
     pthread_t incrementingThread, decrementingThread; // initialize the threads
-    pthread_create(&incrementingThread, NULL, incrementingThreadFunction, NULL); // Using thread with no special attributes, and "coupling it" with a function with no special attributes.
+    pthread_create(&incrementingThread, NULL, incrementingThreadFunction, NULL); // Using thread with no special attributes, and "coupling it" with a function with no special 
     pthread_create(&decrementingThread, NULL, decrementingThreadFunction, NULL);
     
     // TODO:
