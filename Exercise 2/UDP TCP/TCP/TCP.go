@@ -73,7 +73,7 @@ func server(conn net.Conn) {
 
 func main() {
 	// Connect to the server
-	conn, err := net.Dial("tcp", "10.24.37.52:8080")
+	conn, err := net.Dial("tcp", "10.100.23.23:8080")
 	if err != nil {
 		fmt.Println("Error connecting to server:", err)
 		return
@@ -82,5 +82,5 @@ func main() {
 
 	// Start the client and server
 	go client(conn)
-  go server(conn)
+	go server(conn)
 }
