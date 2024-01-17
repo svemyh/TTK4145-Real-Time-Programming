@@ -1,62 +1,58 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"net"
-	"os"
-	"strings"
-	"time"
 )
 
+//```C
+//addr = new InternetAddress(serverIP, serverPort)
+//sock = new Socket(tcp) // TCP, aka SOCK_STREAM
+//|sock.connect(addr)
+// use sock.recv() and sock.send(), just like with UDP
+//```
+
 func client(conn net.Conn) {
-	for {
-		// read input from stdin
-		fmt.Print("Text to send: ")
-		reader := bufio.NewReader(os.Stdin)
-		text, _ := reader.ReadString('\n')
+	// Connect to the server
 
-		// send to socket
-		fmt.Fprintf(conn, text+"\n")
+	if err != nil {
+		fmt.Println(err)
+	}
 
-		// listen for reply
-		message, _ := bufio.NewReader(conn).ReadString('\n')
-		fmt.Print("Message from server: " + message)
+	_, err = conn.Write([]byte("Hello, server!"))
+	if err != nil {
+		fmt.Println(err)
 	}
 }
 
-func handleConnection(newSock net.Conn) {
-	defer newSock.Close()
+//```C
+// Send a message to the server:  "Connect to: " <your IP> ":" <your port> "\0"
 
-	for {
-		// Read the incoming message
-		message, err := bufio.NewReader(newSock).ReadString('\n')
-		if err != nil {
-			fmt.Println("Error reading message:", err)
-			return
-		}
+// do not need IP, because we will set it to listening state
+//addr = new InternetAddress(localPort)
+//acceptSock = new Socket(tcp)
 
-		fmt.Print("Message Received:", string(message))
+// You may not be able to use the same port twice when you restart the program, unless you set this option
+//acceptSock.setOption(REUSEADDR, true)
+//acceptSock.bind(addr)
 
-		// Process the message (e.g., convert to uppercase)
-		newmessage := strings.ToUpper(message)
+//loop {
+// backlog = Max number of pending connections waiting to connect()
+//    newSock = acceptSock.listen(backlog)
 
-		// Send the processed message back to the client
-		newSock.Write([]byte(newmessage + "\n"))
-
-		time.Sleep(1 * time.Second)
-	}
-}
+// Spawn new thread to handle recv()/send() on newSock
+//}
+//```
 
 func server(conn net.Conn) {
-	ln, err := net.Listen("tcp", ":8080")
+	ln, err := net.Listen("tcp", ":20000")
 	if err != nil {
 		fmt.Println("Error while listening:", err)
 		return
 	}
 	defer ln.Close()
 
-	fmt.Println("Server listening on :8080")
+	fmt.Println("Server listening on ", ln)
 
 	for {
 		// Accept a new connection
@@ -73,7 +69,7 @@ func server(conn net.Conn) {
 
 func main() {
 	// Connect to the server
-	conn, err := net.Dial("tcp", "10.100.23.23:8080")
+	conn, err := net.Dial("tcp", "10.24.37.52:20000")
 	if err != nil {
 		fmt.Println("Error connecting to server:", err)
 		return
@@ -81,6 +77,6 @@ func main() {
 	defer conn.Close()
 
 	// Start the client and server
-	go client(conn)
 	go server(conn)
+	go client(conn)
 }
