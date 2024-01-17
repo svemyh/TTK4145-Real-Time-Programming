@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	addr, err := net.ResolveUDPAddr("udp", "0.0.0.0:30000") //addressString to actual address(server/)
+	addr, err := net.ResolveUDPAddr("udp", ":20013") //addressString to actual address(server/)
 	if err != nil {
 		fmt.Println("Error resolving UDP address:", err)
 		return
@@ -49,7 +49,7 @@ func main() {
 			fmt.Println(message)
 			//fmt.PrintIn("Filtered out: ", string(buffer[0:numBytesReceived]))
 		} else {
-			fmt.Println("rand message is: ", message)
+			fmt.Println("random message is: ", message)
 		}
 	}
 }

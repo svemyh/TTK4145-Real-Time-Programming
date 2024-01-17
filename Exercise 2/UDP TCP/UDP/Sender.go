@@ -14,7 +14,7 @@ func main() {
 	}
 
 	//def remote addr
-	raddr, err := net.ResolveUDPAddr("udp", "10.100.23.129:30000") //addressString to actual address(server/)
+	raddr, err := net.ResolveUDPAddr("udp", "10.100.23.129:20013") //addressString to actual address(server/)
 	if err != nil {
 		fmt.Println("Error resolving UDP address:", err)
 		return
@@ -23,9 +23,21 @@ func main() {
 	//create a connection to raddr through a socket object
 	sockConn, err := net.DialUDP("udp", laddr, raddr)
 
-	//Create an empty buffer to to filled
-	buffer = make([]byte, 1024)
+	defer sockConn.Close()
 
-	sockConn.WriteMsgUDP()
+	//Create an empty buffer to to filled
+	buffer := make([]byte, 1024)
+	//oob := make([]byte, 1024)
+
+	n := copy(buffer, []byte("Hello World!"))
+
+	fmt.Printf("copied %d bytes to the buffer: %s\n", n, buffer[:n])
+
+	n, err = sockConn.Write(buffer)
+
+	if err != nil {
+		fmt.Println("Error resolving WriteMsgUDP", err)
+		return
+	}
 
 }
