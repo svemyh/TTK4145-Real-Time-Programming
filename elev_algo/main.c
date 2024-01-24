@@ -41,7 +41,13 @@ int main(void){
             static int prev = -1;
             int f = input.floorSensor();
             if(f != -1  &&  f != prev){
-                fsm_onFloorArrival(f);
+                fsm_onFloorArrival(f);{ // Timer
+            if(timer_timedOut()){
+                timer_stop();
+                fsm_onDoorTimeout();
+            }
+        }
+        
             }
             prev = f;
         }

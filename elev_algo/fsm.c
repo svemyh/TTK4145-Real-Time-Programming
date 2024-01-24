@@ -27,10 +27,10 @@ static void __attribute__((constructor)) fsm_init(){
     outputDevice = elevio_getOutputDevice();
 }
 
-static void setAllLights(Elevator es){
+static void setAllLights(Elevator e){
     for(int floor = 0; floor < N_FLOORS; floor++){
         for(int btn = 0; btn < N_BUTTONS; btn++){
-            outputDevice.requestButtonLight(floor, btn, es.requests[floor][btn]);
+            outputDevice.requestButtonLight(floor, btn, e.requests[floor][btn]);
         }
     }
 }
@@ -138,6 +138,7 @@ void fsm_onDoorTimeout(void){
             break;
         case EB_Moving:
         case EB_Idle:
+        //OBS: Mulig at denne funksjonaliteten burde være på begge
             outputDevice.doorLight(0);
             outputDevice.motorDirection(elevator.dirn);
             break;

@@ -46,7 +46,13 @@ func handleConnection(conn net.Conn) {
 
 // func main() {
 // 	// Listen for incoming connections on port 8080
-// 	ln, err := net.Listen("tcp", ":20013")
+// 	ln, err := net.Listen("tcp", ":2001	// ls, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+// if err != nil {
+// 	fmt.Println("The connection failed. Error:", err)
+// 	return
+// }
+// defer ls.Close()
+//3")
 // 	if err != nil {
 // 		fmt.Println(err)
 // 		return
@@ -76,7 +82,6 @@ func handleConnection(conn net.Conn) {
 // 		fmt.Println(err)
 // 		return
 // 	}
-
 // 	// Print the incoming data
 // 	fmt.Printf("Received: %s", buf)
 // 	// To not get spammed
