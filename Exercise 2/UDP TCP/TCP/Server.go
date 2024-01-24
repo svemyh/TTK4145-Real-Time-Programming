@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	port := 20000
+	port := 10000
 	//Listen
 	//conn, err := net.Listen("tcp", fmt.Sprintf("%s:%d", ip, port))
 	ls, err := net.Listen("tcp", fmt.Sprintf(":%d", port))

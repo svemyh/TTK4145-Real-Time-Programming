@@ -8,7 +8,7 @@ import (
 // Socket -> Connect -> Send <-> Recv (from server) -> Send -> Close
 
 func main() {
-	conn, err := net.Dial("tcp", "192.168.1.6:20000")
+	conn, err := net.Dial("tcp", "10.24.38.142:10000")
 	if err != nil {
 		fmt.Println("The connection failed. Error: ", err)
 		return
