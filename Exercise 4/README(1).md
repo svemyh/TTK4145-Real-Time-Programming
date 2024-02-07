@@ -20,6 +20,7 @@ Some engineering questions, before you continue:
 - Why would we want to self-terminate, instead of handling the error immediately in the "primary" (as opposed to deferring it to the backup as it "spins up")?
 - Is there any reason to prefer a process pair style, as opposed to making a separate supervisor-like program whose sole purpose is to restart the main program?
 
+
 ---
 
 Create a program (in any language, on any OS) that uses the process pair technique to print the numbers `1`, `2`, `3`, `4`, etc. to a terminal window. The program should create its own backup: When the primary is running, only the primary should keep counting, and the backup should do nothing. When the primary dies, the backup should become the new primary, create its own new backup, and keep counting where the dead one left off. Make sure that no numbers are skipped!
